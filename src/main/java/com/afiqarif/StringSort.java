@@ -1,7 +1,7 @@
 package com.afiqarif;
 
 public class StringSort {
-    /*
+    /**
      * This method is the sorting algorithm
      */
     public static void sort(String[] strArray) {
@@ -19,7 +19,10 @@ public class StringSort {
 
         // outer loop to determine the place digit
         for (int place = maxLength - 1; place >= 0; place--) {
-
+            
+            // create an array pointer that alternate between array_1 and array_2
+            String[][] currentArray = (place % 2) == 0 ? array_1 : array_2;
+            
             // initializing array that hold size of each buckets
             int[] bucketSize = new int[27];
 
@@ -28,42 +31,39 @@ public class StringSort {
                 // Convert character at current place to lowercase for case-insensitive comparison
                 char currentChar = Character.toLowerCase(str.charAt(place));
                 // Space (' ') goes to bucket 26
-                int letterPlace = (currentChar == ' ') ? 26 : currentChar - 'a';
-                array_1[letterPlace][bucketSize[letterPlace]] = str;
+                int letterPlace = currentChar == ' ' ? 26 : currentChar - 'a';
+                currentArray[letterPlace][bucketSize[letterPlace]] = str;
                 bucketSize[letterPlace]++; // incrementing bucket size for current character
             }
-            
 
             // reconstructing strArray with partially sorted elements
             int index = 0;
             for (int i = 0; i < 27; i++) {
                 for (int j = 0; j < bucketSize[i]; j++) {
-                    strArray[index] = array_1[i][j];
+                    strArray[index] = currentArray[i][j];
                     index++;
                 }
             }
-
-            // swapping array reference for each pass
-            swap(array_1, array_2);
         }
 
         // remove padding so that each word has no redundant character (in this case, ' ')
         removePadding(strArray);
     }
 
-    /*
+    /**
      * This method is to get the maximum length of element in array
      */
     private static int getMaxLength(String[] strArray) {
         int max = -1;
         for (String str : strArray) {
-            if (max < str.length())
-                max = str.length();
+            int strLength = str.length();
+            if (max < strLength)
+                max = strLength;
         }
         return max;
     }
 
-    /*
+    /**
      * This method is to add padding to make sure all element in array has the same length
      */
     private static void addPadding(String[] strArray) {
@@ -82,7 +82,7 @@ public class StringSort {
         }
     }    
 
-    /*
+    /**
      * This method is to remove padding
      */
     private static void removePadding(String[] strArray) {
@@ -92,26 +92,15 @@ public class StringSort {
             int end = str.length() - 1;
     
             // Find the first non-space character
-            while (start <= end && str.charAt(start) == ' ') {
+            while (start <= end && str.charAt(start) == ' ')
                 start++;
-            }
     
             // Find the last non-space character
-            while (end >= start && str.charAt(end) == ' ') {
+            while (end >= start && str.charAt(end) == ' ')
                 end--;
-            }
     
             // Extract the substring manually
             strArray[i] = (start <= end) ? str.substring(start, end + 1) : "";
         }
-    }
-
-    /*
-     * This method is to swap array reference
-     */
-    private static void swap(String[][] array_1, String[][] array_2) {
-        String[][] temp = array_1;
-        array_1 = array_2;
-        array_2 = temp;
     }
 }
