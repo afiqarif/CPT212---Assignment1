@@ -11,13 +11,14 @@ public class Main {
             "Banana", "apple", "Orange", "mango", "Grape", "Peach", "pear", "Lemon", "kiwi", "Pineapple"
         };
 
-        // Sorting number
+        // Sorting numbers
         System.out.println("==== Sorting Number ====");
         System.out.println("Unsorted Array: ");
         for (int num : data)
             System.out.print(num + " ");
 
         IntegerSort.sort(data);
+
         System.out.println("\n\nSorted Array in Ascending Order: ");
         for (int num : data)
             System.out.print(num + " ");
@@ -31,6 +32,7 @@ public class Main {
             System.out.print(str + " ");
 
         StringSort.sort(words);
+        
         System.out.println("\n\nSorted Array in Ascending Order: ");
         for (String str : words)
             System.out.print(str + " ");

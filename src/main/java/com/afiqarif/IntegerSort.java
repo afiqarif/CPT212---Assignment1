@@ -24,7 +24,7 @@ public class IntegerSort {
             for (int num : numArray) {
                 int digit = (num / place) % 10;
                 array_1[digit][bucketSize[digit]] = num;
-                bucketSize[digit]++;
+                bucketSize[digit]++; // increment bucket size for current number
             }
 
             // reconstruct numArray with partially sorted elements
@@ -46,8 +46,10 @@ public class IntegerSort {
      */
     private static int getMax(int[] numArray) {
         int max = -1;
-        for (int num : numArray)
-            max = max < num ? num : max;
+        for (int num : numArray) {
+            if (max < num)
+                max = num;
+        }
         return max;
     }
 

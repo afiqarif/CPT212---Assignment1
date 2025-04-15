@@ -56,8 +56,10 @@ public class StringSort {
      */
     private static int getMaxLength(String[] strArray) {
         int max = -1;
-        for (String str : strArray)
-            max = max < str.length() ? str.length() : max;
+        for (String str : strArray) {
+            if (max < str.length())
+                max = str.length();
+        }
         return max;
     }
 
@@ -70,18 +72,37 @@ public class StringSort {
             String str = strArray[i];
             int strLength = str.length();
             if (strLength < maxLength) {
-                // putting ' ' based on how many characters are needed to reach maxLength
-                strArray[i] = str + " ".repeat(maxLength - strLength);
+                int spacesToAdd = maxLength - strLength;
+                // StringBuilder class to add padding.
+                StringBuilder padded = new StringBuilder(str);
+                for (int j = 0; j < spacesToAdd; j++)
+                    padded.append(' ');
+                strArray[i] = padded.toString();
             }
         }
-    }
+    }    
 
     /*
      * This method is to remove padding
      */
     private static void removePadding(String[] strArray) {
         for (int i = 0; i < strArray.length; i++) {
-            strArray[i] = strArray[i].trim();
+            String str = strArray[i];
+            int start = 0;
+            int end = str.length() - 1;
+    
+            // Find the first non-space character
+            while (start <= end && str.charAt(start) == ' ') {
+                start++;
+            }
+    
+            // Find the last non-space character
+            while (end >= start && str.charAt(end) == ' ') {
+                end--;
+            }
+    
+            // Extract the substring manually
+            strArray[i] = (start <= end) ? str.substring(start, end + 1) : "";
         }
     }
 
